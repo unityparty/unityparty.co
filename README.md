@@ -1,7 +1,7 @@
-## unityparty.co
+# unityparty.co
 The main unity party site.
 
-# Database
+## Database
 To set up the database, you're going to have to do the following.
 (1) Create a database of any name.
 
