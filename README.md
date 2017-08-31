@@ -1,5 +1,9 @@
 # unityparty.co
-The main unity party site.
+The main Unity Party site.
+
+## Requirements
+PHP version 5.5  
+MySQL
 
 ## Database
 To set up the database, you're going to have to do the following.  
@@ -18,3 +22,8 @@ To set up the database, you're going to have to do the following.
 --(b) Set $config['dbname'] to whatever you set the password to.  
 --(c) Set $config['dbuser'] to whatever you called the user.  
 --(d) Set $config['dbpass'] to whatever you set ther user's password to.  
+
+## Credits
+(1) Mobile-Detect  
+-- (a) https://mobiledetect.net  
+-- (b) https://github.com/serbanghita/Mobile-Detect
