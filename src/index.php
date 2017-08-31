@@ -35,11 +35,13 @@
 
 	<body>
 
-		<div class="NOTICE">
-			<?php 
-				echo "<b>" . $config['notice'] . "</b>";
-			?>
-		</div>
+	<?php
+		if (!is_null($config['notice'])) {
+			echo "<div class=\"NOTICE\">";
+			echo "<b>" . $config['notice'] . "</b>";
+			echo "</div>";
+		}
+	?>
 
 		<div class="BANNER">
 			<a href="index.php"><img src="assets/images/banner.png" width=100% /></a>
@@ -92,7 +94,7 @@
 					while ($row = mysql_fetch_assoc($query)) {
 						echo "<div class=\"article\">";
 						echo "<p><b class=\"article-title\">" . $row['title'] . "</b> by <a href=\"member.php?username=" . $row['author'] . "\">" . $row['author'] . "</a></p>";
-						echo "<p>" . $row['brief'] . "</p>";
+						echo "<p style=\"text-align: justify\">" . $row['brief'] . "</p>";
 						echo "<p>Click <a href=\"?article=" . $row['id'] . "\">here</a> to read more.</p>";
 						echo "</div><hr />";
 
@@ -103,8 +105,9 @@
 					$query = mysql_fetch_assoc(mysql_query("SELECT * FROM `news` WHERE `id` = '" . $_GET['article'] . "' ORDER BY `id` DESC", $conn));
 
 					echo "<div class=\"article\">";
-					echo "<p style=\"display: inline-block;\"><b class=\"article-title\" style=\"font-size: 1.5em;\">" . $query['title'] . "</b><br />by <a href=\"member.php?username=" . $query['author'] . "\">" . $query['author'] . "</a></p>";
-					echo "<p>" . $query['content'] . "</p>";
+					echo "<p style=\"display: inline-block;\"><b class=\"article-title\" style=\"font-size: 1.5em;\">" . $query['title'] . "</b><br />";
+					echo "by <a href=\"member.php?username=" . $query['author'] . "\">" . $query['author'] . "</a> at " . substr($query['date'], 11) . " on " . substr($query['date'], 0, 11) . "</p>";
+					echo "<p style=\"text-align: justify\">" . $query['content'] . "</p>";
 					echo "<a href=\"index.php\">Return</a>";
 					echo "</div><hr />";
 

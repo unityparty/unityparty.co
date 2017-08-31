@@ -32,11 +32,13 @@
 
 	<body>
 
-		<div class="NOTICE">
-			<?php 
+		<?php
+			if (!is_null($config['notice'])) {
+				echo "<div class=\"NOTICE\">";
 				echo "<b>" . $config['notice'] . "</b>";
-			?>
-		</div>
+				echo "</div>";
+			}
+		?>
 
 		<div class="BANNER">
 			<a href="index.php"><img src="assets/images/banner.png" width=100% /></a>
@@ -66,7 +68,7 @@
 			?>
 		</div>
 
-		<div class="MAIN">
+		<div class="MAIN" style="text-align: justify;">
 
 			<p>A Full Member of the Unity Party is someone who accepts the platform of the Party and makes a formal committment to support its activities, either financially or in time and effort. Individuals may also join as non-voting Associate Members if they wish to explore the opportunities the Party has to offer before making a formal committment to our aims and projects.</p>
  

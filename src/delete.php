@@ -3,16 +3,21 @@
 	session_start();
 	$_SESSION['previous'] = $_SESSION['page'];
 	$_SESSION['page'] = "delete.php";
+
+	include('config.php');
 	
 	if (isset($_SESSION['username'])) {
 
 		$conn = mysql_connect($config['dbaddr'], $config['dbuser'], $config['dbpass']);
 		mysql_select_db($config['dbname'], $conn);
 
-		$row0 = mysql_fetch_assoc(mysql_query("SELECT * FROM `users` WHERE `username` = '" . $_SESSION['username'] . "'", $conn));
+		$query = mysql_query("SELECT * FROM `users` WHERE `username` = '" . $_SESSION['username'] . "'", $conn);
+		$row = mysql_fetch_assoc($query);
 
-		if ($row0['authtoken'] == $_SESSION['authtoken']) {
-
+		if ($row['authtoken'] == $_SESSION['authtoken']) {
+			$query = mysql_query("DELETE FROM `news` WHERE `id` = " . $_GET['article'], $conn);
+		} else {
+			echo "FAILURE";
 		}
 		
 	}

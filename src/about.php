@@ -3,8 +3,8 @@
 	$_SESSION['previous'] = $_SESSION['page'];
 	$_SESSION['page'] = "about.php";
 
-	include('index.php');
-	include ('includes/Mobile-Detect/Mobile_Detect.php');
+	include('config.php');
+	include('includes/Mobile-Detect/Mobile_Detect.php');
 
 	$client = new Mobile_Detect();
 	if ($client->isMobile()) {
@@ -32,11 +32,13 @@
 
 	<body>
 
-		<div class="NOTICE">
-			<?php 
+		<?php
+			if (!is_null($config['notice'])) {
+				echo "<div class=\"NOTICE\">";
 				echo "<b>" . $config['notice'] . "</b>";
-			?>
-		</div>
+				echo "</div>";
+			}
+		?>
 
 		<div class="BANNER">
 			<a href="index.php"><img src="assets/images/banner.png" width=100% /></a>
@@ -66,7 +68,7 @@
 			?>
 		</div>
 
-		<div class="MAIN">
+		<div class="MAIN" style="text-align: justify;">
 
 			<p>The Unity Party is an international association of the political left, dedicated to fostering unity and concerted action with the aim of rebuilding working-class consciousness in the 21st century. We draw upon leftists of all stripes in the hope that what unites us - a committment to equality, justice, freedom, and the Planet we all live on - is stronger than what divides us.</p>
  

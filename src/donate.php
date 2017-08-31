@@ -32,11 +32,13 @@
 
 	<body>
 
-		<div class="NOTICE">
-			<?php 
+		<?php
+			if (!is_null($config['notice'])) {
+				echo "<div class=\"NOTICE\">";
 				echo "<b>" . $config['notice'] . "</b>";
-			?>
-		</div>
+				echo "</div>";
+			}
+		?>
 
 		<div class="BANNER">
 			<a href="index.php"><img src="assets/images/banner.png" width=100% /></a>
@@ -66,7 +68,7 @@
 			?>
 		</div>
 
-		<div class="MAIN">
+		<div class="MAIN" style="text-align: justify;">
 
 			<p>The Unity Party cannot provide a voice to the voiceless without resources; this is a fact of capitalism, and we stridently condemn any attempt to guilt the workers' movement into not accepting money - this is a distortion of our beliefs which only serves the powerful. We ask that all members make whatever donations they can; every penny helps move the Party closer to its goal of a united working class.</p>
  

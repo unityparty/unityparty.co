@@ -32,11 +32,13 @@
 
 	<body>
 
-		<div class="NOTICE">
-			<?php 
+		<?php
+			if (!is_null($config['notice'])) {
+				echo "<div class=\"NOTICE\">";
 				echo "<b>" . $config['notice'] . "</b>";
-			?>
-		</div>
+				echo "</div>";
+			}
+		?>
 
 		<div class="BANNER">
 			<a href="index.php"><img src="assets/images/banner.png" width=100% /></a>

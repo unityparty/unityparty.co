@@ -32,11 +32,13 @@
 
 	<body>
 
-		<div class="NOTICE">
-			<?php 
-				echo "<b>" . $config['notice'] . "</b>";
-			?>
-		</div>
+	<?php
+		if (!is_null($config['notice'])) {
+			echo "<div class=\"NOTICE\">";
+			echo "<b>" . $config['notice'] . "</b>";
+			echo "</div>";
+		}
+	?>
 
 		<div class="BANNER">
 			<a href="index.php"><img src="assets/images/banner.png" width=100% /></a>
@@ -66,7 +68,7 @@
 			?>
 		</div>
 
-		<div class="MAIN">
+		<div class="MAIN" style="text-align: justify;">
 
 			<p>Full Unity Party members can volunteer for any of the exciting projects being undertaken by our five Working Groups. Working Group activities include creating journalistic content, imagery, podcasts, video, infographics, and other media; recruitment efforts and distribution of literature and images; organisation of fundraisers, educational events, and group social activities; programming, maintenance of Party databases and platforms, and other coding projects; and much more. Find out more about each Working Group and their role within the Party structure in the By-laws.</p>
 
