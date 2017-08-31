@@ -1,0 +1,11 @@
+.MAIN a {
+	text-decoration: none;
+	color: #fff;
+	background-color: #E73131;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.article-title {
+	font-family: 'adamcg';
+}

@@ -1,0 +1,149 @@
+@font-face {
+    font-family: 'adamcg';
+    src: url('https://unityparty.co/assets/fonts/adamcg.ttf');
+}
+
+body {
+	padding: 0;
+	margin: 0;
+	background-color: #EAEAEA;
+	display: grid;
+	grid-template-columns: 12.5% 75% 12.5%;
+	grid-template-rows: auto;
+	grid-template-areas:
+	  "notice notice notice"
+	  "empty0 banner empty1"
+	  "menu menu menu"
+	  "umenu umenu umenu"
+	  "empty2 main empty3"
+	  "empty4 footer empty5";
+}
+
+.NOTICE {
+	/* display: none; */ /* UNCOMMENT DISPLAY: NONE; TO HIDE THE NOTICE */
+
+	grid-area: notice;
+	background-color: #E74C26;
+	color: #EAEAEA;
+	text-align: center;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.BANNER {
+	grid-area: banner;
+	background-color: #FFF;
+}
+
+.BANNER img {
+	display: block;
+}
+
+.MENU {
+	grid-area: menu;
+	background-color: #E73131;
+	padding-left: 12.5%;
+	padding-right: 12.5%;
+}
+
+.MENU table {
+	width: 100%; 
+	border-collapse: collapse; 
+	border: 0; 
+	margin: 0; 
+	padding: 0;
+}
+
+.MENU td, .MENU th {
+	padding: 0;
+}
+
+.MENU a {
+	font-family: 'adamcg';
+	text-align: center;
+	text-decoration: none;
+	display: block;
+	color: #fff;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.MENU a:hover {
+	background-color: #E94141;
+}
+
+.selected {
+	background-color: #E94141;
+}
+
+.USERMENU {
+	grid-area: umenu;
+	background-color: #F8F8F8;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	margin-left: 12.5%;
+	margin-right: 12.5%;
+}
+
+.USERMENU a {
+	font-family: 'adamcg';
+	text-align: center;
+	text-decoration: none;
+	color: #000;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.USERMENU a:hover {
+	background-color: #EAEAEA;
+}
+
+.uselected {
+	background-color: #EAEAEA;
+}
+
+.MAIN {
+	grid-area: main;
+	background-color: #FFF;
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.MAIN a {
+	text-decoration: none;
+	color: #fff;
+	background-color: #E73131;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.FOOTER {
+	grid-area: footer;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	padding-left: 4px;
+	padding-right: 4px;
+	background-color: #fff;
+}
+
+.FOOTER a {
+	text-decoration: none;
+	color: #fff;
+	background-color: #E73131;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+hr {
+	border-color: #EAEAEA;
+}
+
+h1, h2, h3, h4, h5, h6, b {
+	font-family: 'adamcg';
+}
