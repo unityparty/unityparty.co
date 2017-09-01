@@ -1,7 +1,11 @@
 <?php 
 	session_start();
 	$_SESSION['previous'] = $_SESSION['page'];
-	$_SESSION['page'] = "member.php";
+	if (isset($_GET['username'])) {
+		$_SESSION['page'] = "member.php?username=" . $_GET['username'];
+	} else {
+		$_SESSION['page'] = "member.php";
+	}
 
 	include("config.php");
 	include ('includes/Mobile-Detect/Mobile_Detect.php');
@@ -99,9 +103,21 @@
 							if ($_SESSION['username'] == $row['username']) {
 								echo "<br /><hr />";
 								if ($_SESSION['authtoken'] == $row['authtoken']) {
-									echo "Valid authentication token";
+
+									$user = mysql_fetch_assoc(mysql_query("SELECT * FROM `users` WHERE `username` = '" . $_SESSION['username'] . "'"));
+									echo "<form action=\"update.php\" method=\"POST\">";
+									echo "<p>Nickname:</p>";
+									if (is_null($user['nickname'])) {
+										echo "<input type=\"text\" name=\"nickname\" value=\"" . $user['username'] . "\" /><br /><br />";
+									} else {
+										echo "<input type=\"text\" name=\"nickname\" value=\"" . $user['nickname'] . "\" /><br /><br />";
+									}
+									echo "<p>Description:</p>";
+									echo "<textarea name=\"description\" rows=\"8\">" . $user['description'] . "</textarea><br /><br />";
+									echo "<input type=\"submit\" value=\"Submit\" />";
+									echo "</form>";
 								} else {
-									echo "<p>Invalid authentication token</p>";
+									echo "<p><b>Invalid authentication token.</b></p>";
 								}
 							}
 						}
