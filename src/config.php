@@ -2,7 +2,7 @@
 
 	// DATABASE DETAILS (to set up, see details on the github) 
 	$config['dbaddr'] = 'localhost';
-	$config['dbname'] = 'table';
+	$config['dbname'] = 'database-name';
 	$config['dbuser'] = 'username';
 	$config['dbpass'] = "password";
 
