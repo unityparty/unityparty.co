@@ -43,7 +43,7 @@
 								echo "</p>";
 							}
 
-							echo "<p>" . $row['description'] . "</p>";
+							echo "<p>" . bbParse($row['description']) . "</p>";
 
 							if ($_SESSION['username'] == $row['username']) {
 								echo "<br /><hr />";

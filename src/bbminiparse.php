@@ -36,6 +36,15 @@
 					} elseif ($letters[$key + 1] == "/" && $letters[$key + 2] == "u" && $letters[$key+3] == "r") { // CLOSE URL
 						$parsed = $parsed . "\">" . substr($str, $tmp, $key - $tmp) . "</a>";
 						$skip = 5;
+					} elseif ($letters[$key + 1] == "i" && $letters[$key + 2] == "m" && $letters[$key + 3] == "g" && $letters[$key + 4] == "]") { // OPEN IMAGE
+						$parsed = $parsed . "<img width=\"100%\" src=\"";
+						$skip = 4;
+					} elseif ($letters[$key + 1] == "/" && $letters[$key + 2] == "i" && $letters[$key + 3] == "m" && $letters[$key + 4] == "g" && $letters[$key + 5] == "]") { // CLOSE IMAGE
+						$parsed = $parsed . "\" />";
+						$skip = 5;
+					} elseif ($letters[$key + 1] == "b" && $letters[$key + 2] == r && $letters[$key + 3] == "]") {
+						$parsed = $parsed . "<br />";
+						$skip = 3;
 					} else { // OPEN NOTHING
 						$parsed = $parsed . "[";
 					}

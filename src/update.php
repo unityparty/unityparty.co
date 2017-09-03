@@ -37,8 +37,7 @@
 			if ($_POST['description'] !== $user['description']) {
 				if (!containsHTML($_POST['description'])) {
 					if (strpos($_POST['description'], "<script") == FALSE) {
-						$description = bbParse($_POST['description']);
-						$query = mysqli_query($conn, "UPDATE `users` set `description` = '" . mysqli_real_escape_string($conn, $description) . "' WHERE `id` = " . $user['id']);
+						$query = mysqli_query($conn, "UPDATE `users` set `description` = '" . mysqli_real_escape_string($conn, $_POST['description']) . "' WHERE `id` = " . $user['id']);
 					} 
 				}
 			}
