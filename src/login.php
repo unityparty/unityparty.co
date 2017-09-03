@@ -3,8 +3,7 @@
 	$_SESSION['previous'] = $_SESSION['page'];
 	$_SESSION['page'] = "login.php";
 
-	include('config.php');
-	include ('includes/Mobile-Detect/Mobile_Detect.php');
+	include('includes/Mobile-Detect/Mobile_Detect.php');
 
 	$client = new Mobile_Detect();
 	if ($client->isMobile()) {
@@ -12,61 +11,10 @@
 			$_SESSION['view'] = 'mobile';
 		}
 	}
+
+	include('template.php');
+
 ?>
-
-<!DOCTYPE html>
-<html>
-
-	<head>
-
-		<title>Unity Party | Login</title>
-		<?php
-			if ($_SESSION['view'] == 'mobile') {
-				echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"assets/css/mobilemain.css\" />";
-			} else {
-				echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"assets/css/main.css\" />";
-			}
-		?>
-
-	</head>
-
-	<body>
-
-		<?php
-			if (!is_null($config['notice'])) {
-				echo "<div class=\"NOTICE\">";
-				echo "<b>" . $config['notice'] . "</b>";
-				echo "</div>";
-			}
-		?>
-
-		<div class="BANNER">
-			<a href="index.php"><img src="assets/images/banner.png" width=100% /></a>
-		</div>
-
-		<div class="MENU">
-			<table><tr>
-				<td><a href="index.php">News</a></td>
-				<td><a href="about.php">About</a></td>
-				<td><a href="join.php">Join</a></td>
-				<td><a href="donate.php">Donate</a></td>
-				<td><a href="volunteer.php">Volunteer</a></td>
-			</tr></table>
-		</div>
-
-		<div class="USERMENU">
-			<?php
-				if (!isset($_SESSION['username'])) {
-					echo "<a href=\"signup.php\">Sign up</a>";
-					echo "<a href=\"login.php\" class=\"uselected\">Log in</a>";
-				} else {
-					echo "<a href=\"member.php?username=" . $_SESSION['username'] . "\">" . $_SESSION['username'] . "</a>";
-					echo "<a href=\"forum.php\">Forums</a>";
-					echo "<a href=\"member.php\">Members</a>";
-					echo "<a href=\"signout.php\">Sign out</a>";
-				}
-			?>
-		</div>
 
 		<div class="MAIN">
 
@@ -77,12 +25,9 @@
 					$username = $_POST['username'];
 					$password = $_POST['password'];
 
-					$conn = mysql_connect($config['dbaddr'], $config['dbuser'], $config['dbpass']);
-					mysql_select_db($config['dbname'], $conn);
-
-					$query = mysql_query("SELECT * FROM `users`");
+					$query = mysqli_query($conn, "SELECT * FROM `users`");
 					$found = 0;
-					while ($row = mysql_fetch_assoc($query)) {
+					while ($row = mysqli_fetch_assoc($query)) {
 						if ($username  == $row['username']) {
 
 							$found = 1;
@@ -97,7 +42,7 @@
 
 							$authtoken = rand(0, 999999999);
 
-							$query = mysql_query("UPDATE `users` SET `authtoken` = " . $authtoken . " WHERE `username` = '" . $username . "'", $conn);
+							$query = mysqli_query($conn, "UPDATE `users` SET `authtoken` = " . mysqli_real_escape_string($conn, $authtoken) . " WHERE `username` = '" . mysqli_real_escape_string($conn, $username) . "'");
 
 							$_SESSION['authtoken'] = $authtoken;
 							$_SESSION['username'] = $username;
@@ -112,8 +57,6 @@
 					} else {
 						echo "User doesn't exist.";
 					}
-
-					mysql_close($conn);
 
 				} else {
 

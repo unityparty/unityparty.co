@@ -6,14 +6,11 @@
 
 	include('config.php');
 
-	$conn = mysql_connect($config['dbaddr'], $config['dbuser'], $config['dbpass']);
-	mysql_select_db($config['dbname'], $conn);
+	$conn = mysqli_connect($config['dbaddr'], $config['dbuser'], $config['dbpass'], $config['dbname']);
 
-	$query = mysql_query("UPDATE `users` SET `authtoken` = NULL WHERE `username` = '" . $_SESSION['username'] . "'", $conn);
-
+	$query = mysqli_query($conn, "UPDATE `users` SET `authtoken` = NULL WHERE `username` = '" . mysqli_real_escape_string($conn, $_SESSION['username']) . "'");
 
 
-	mysql_close($conn);
 
 	if (isset($_SESSION['view'])) {
 		$view = $_SESSION['view'];

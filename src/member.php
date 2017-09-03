@@ -1,14 +1,13 @@
 <?php 
 	session_start();
 	$_SESSION['previous'] = $_SESSION['page'];
-	if (isset($_GET['username'])) {
+	if (null !== $_GET['username']) {
 		$_SESSION['page'] = "member.php?username=" . $_GET['username'];
 	} else {
 		$_SESSION['page'] = "member.php";
 	}
 
-	include("config.php");
-	include ('includes/Mobile-Detect/Mobile_Detect.php');
+	include('includes/Mobile-Detect/Mobile_Detect.php');
 	
 	$client = new Mobile_Detect();
 	if ($client->isMobile()) {
@@ -16,76 +15,22 @@
 			$_SESSION['view'] = 'mobile';
 		}
 	}
+
+	include("template.php");
+
 ?>
-
-<!DOCTYPE html>
-<html>
-
-	<head>
-
-		<title>Unity Party | Member</title>
-		<?php
-			if ($_SESSION['view'] == 'mobile') {
-				echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"assets/css/mobilemain.css\" />";
-			} else {
-				echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"assets/css/main.css\" />";
-			}
-		?>
-
-	</head>
-
-	<body>
-
-		<?php
-			if (!is_null($config['notice'])) {
-				echo "<div class=\"NOTICE\">";
-				echo "<b>" . $config['notice'] . "</b>";
-				echo "</div>";
-			}
-		?>
-
-		<div class="BANNER">
-			<a href="index.php"><img src="assets/images/banner.png" width=100% /></a>
-		</div>
-
-		<div class="MENU">
-			<table><tr>
-				<td><a href="index.php">News</a></td>
-				<td><a href="about.php">About</a></td>
-				<td><a href="join.php">Join</a></td>
-				<td><a href="donate.php">Donate</a></td>
-				<td><a href="volunteer.php">Volunteer</a></td>
-			</tr></table>
-		</div>
-
-		<div class="USERMENU">
-			<?php
-				if (!isset($_SESSION['username'])) {
-					echo "<a href=\"signup.php\">Sign up</a>";
-					echo "<a href=\"login.php\">Log in</a>";
-				} else {
-					echo "<a href=\"member.php?username=" . $_SESSION['username'] . "\">" . $_SESSION['username'] . "</a>";
-					echo "<a href=\"forum.php\">Forums</a>";
-					echo "<a href=\"member.php\" class=\"uselected\">Members</a>";
-					echo "<a href=\"signout.php\">Sign out</a>";
-				}
-			?>
-		</div>
 
 		<div class="MAIN">
 
 			<?php 
 
-				if (isset($_GET['username'])) {
-					
-					$conn = mysql_connect($config['dbaddr'], $config['dbuser'], $config['dbpass']);
-					mysql_select_db($config['dbname'], $conn);
+				if (null !== $_GET['username']) {
 
-					$query = mysql_query("SELECT * FROM `users`", $conn);
+					$query = mysqli_query($conn, "SELECT * FROM `users`");
 
 					$found = 0;
-					while ($row = mysql_fetch_assoc($query)) {
-						if ($row['username'] == $_GET['username']) {
+					while ($row = mysqli_fetch_assoc($query)) {
+						if ($row['username'] == mysqli_real_escape_string($conn, $_GET['username'])) {
 							$found = 1;
 
 							if (isset($row['nickname'])) {
@@ -104,7 +49,7 @@
 								echo "<br /><hr />";
 								if ($_SESSION['authtoken'] == $row['authtoken']) {
 
-									$user = mysql_fetch_assoc(mysql_query("SELECT * FROM `users` WHERE `username` = '" . $_SESSION['username'] . "'"));
+									$user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM `users` WHERE `username` = '" . mysqli_real_escape_string($conn, $_SESSION['username']) . "'"));
 									echo "<form action=\"update.php\" method=\"POST\">";
 									echo "<p>Nickname:</p>";
 									if (is_null($user['nickname'])) {
@@ -115,6 +60,13 @@
 									echo "<p>Description:</p>";
 									echo "<textarea name=\"description\" rows=\"8\">" . $user['description'] . "</textarea><br /><br />";
 									echo "<input type=\"submit\" value=\"Submit\" />";
+									echo "</form><hr />";
+
+									echo "<form action=\"delete.php\" method=\"POST\">";
+									echo "<input type=\"text\" name=\"method\" value=\"user\" style=\"display: none;\" />";
+									echo "<input type=\"password\" placeholder=\"Password\" /><br /><br />";
+									echo "<p>Note: this feature is not yet implemented.</p>";
+									echo "<input type=\"submit\" value=\"Delete Account\" />";
 									echo "</form>";
 								} else {
 									echo "<p><b>Invalid authentication token.</b></p>";
@@ -124,10 +76,8 @@
 					}
 
 					if (!$found) {
-						echo "User " . $_GET['username'] . " not found.";
+						echo "User " . mysqli_real_escape_string($conn, $_GET['username']) . " not found.";
 					}
-
-					mysql_close($conn);
 
 				} else {
 					echo "Still working on it (you can view specific profiles, though).";

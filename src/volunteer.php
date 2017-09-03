@@ -4,7 +4,7 @@
 	$_SESSION['page'] = "volunteer.php";
 
 	include('config.php');
-	include ('includes/Mobile-Detect/Mobile_Detect.php');
+	include('includes/Mobile-Detect/Mobile_Detect.php');
 
 	$client = new Mobile_Detect();
 	if ($client->isMobile()) {

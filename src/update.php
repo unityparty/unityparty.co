@@ -6,10 +6,9 @@
 
 	include("config.php");
 
-	$conn = mysql_connect($config['dbaddr'], $config['dbuser'], $config['dbpass']);
-	mysql_select_db($config['dbname'], $conn);
+	$conn = mysqli_connect($config['dbaddr'], $config['dbuser'], $config['dbpass'], $config['dbname']);
 
-	$user = mysql_fetch_assoc(mysql_query("SELECT * FROM `users` WHERE `username` = '" . $_SESSION['username'] . "'"));
+	$user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM `users` WHERE `username` = '" . mysqli_real_escape_string($conn, $_SESSION['username']) . "'"));
 
 	if (isset($_SESSION['authtoken']) && $_SESSION['authtoken'] == $user['authtoken']) {
 
@@ -17,7 +16,7 @@
 			
 			if ($_POST['nickname'] == $user['username']) {
 
-				$query = mysql_query("UPDATE `users` SET `nickname` = null WHERE `id` = " . $user['id']);
+				$query = mysqli_query($conn, "UPDATE `users` SET `nickname` = null WHERE `id` = " . mysqli_real_escape_string($conn, $user['id']));
 
 			} elseif ($_POST['nickname'] !== $user['nickname']) {
 
@@ -25,7 +24,7 @@
 						echo "<p>Scripts not allowed.</p>";
 					} else {
 
-						$query = mysql_query("UPDATE `users` SET `nickname` = '" . mysql_real_escape_string($_POST['nickname']) . "' WHERE `id` = " . $user['id']);
+						$query = mysqli_query($conn, "UPDATE `users` SET `nickname` = '" . mysqli_real_escape_string($conn, $_POST['nickname']) . "' WHERE `id` = " . mysqli_real_escape_string($conn, $user['id']));
 
 					}
 
@@ -41,7 +40,7 @@
 						echo "<p>Scripts not allowed.</p>";
 					} else {
 		
-						$query = mysql_query("UPDATE `users` set `description` = '" . mysql_real_escape_string($_POST['description']) . "' WHERE `id` = " . $user['id']);
+						$query = mysqli_query($conn, "UPDATE `users` set `description` = '" . mysqli_real_escape_string($conn, $_POST['description']) . "' WHERE `id` = " . $user['id']);
 
 					}
 			}
@@ -50,7 +49,7 @@
 
 	}
 
-	mysql_close($conn);
+	mysqli_close($conn);
 
 	if (isset($_SESSION['previous'])) {
 		echo "<meta http-equiv=\"refresh\" content=\"0; url=" . $_SESSION['previous'] . "\" />";

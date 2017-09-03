@@ -8,24 +8,39 @@
 	
 	if (isset($_SESSION['username'])) {
 
-		$conn = mysql_connect($config['dbaddr'], $config['dbuser'], $config['dbpass']);
-		mysql_select_db($config['dbname'], $conn);
+		$conn = mysqli_connect($config['dbaddr'], $config['dbuser'], $config['dbpass'], $config['dbname']);
 
-		$query = mysql_query("SELECT * FROM `users` WHERE `username` = '" . $_SESSION['username'] . "'", $conn);
-		$row = mysql_fetch_assoc($query);
+		$query = mysqli_query($conn, "SELECT * FROM `users` WHERE `username` = '" . mysqli_real_escape_string($conn, $_SESSION['username']) . "'");
+		$row = mysqli_fetch_assoc($query);
+
+		$article = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM `news` WHERE `id` = " . mysqli_real_escape_string($conn, $_GET['article'])));
 
 		if ($row['authtoken'] == $_SESSION['authtoken']) {
-			$query = mysql_query("DELETE FROM `news` WHERE `id` = " . $_GET['article'], $conn);
+
+			if (isset($_GET['article'])) {
+
+				if ($row['username'] == $article['author'] || $row['admin']) {
+
+					$query = mysqli_query($conn, "DELETE FROM `news` WHERE `id` = " . mysqli_real_escape_string($conn, $_GET['article']));
+				}
+
+				if (isset($_SESSION['previous'])) {
+					echo "<meta http-equiv=\"refresh\" content=\"0; url=" . $_SESSION['previous'] . "\">";
+				} else {
+					echo "<meta http-equiv=\"refresh\" content=\"0; url=index.php\">";
+				}
+			} elseif ($_POST['method'] == "user") {
+
+				if (password_verify($_POST['password'], $row['password'])) {
+					echo "password correct";
+				}
+
+			}
+
 		} else {
 			echo "FAILURE";
 		}
 		
-	}
-
-	if (isset($_SESSION['previous'])) {
-		echo "<meta http-equiv=\"refresh\" content=\"0; url=" . $_SESSION['previous'] . "\">";
-	} else {
-		echo "<meta http-equiv=\"refresh\" content=\"0; url=index.php\">";
 	}
 
 ?>
