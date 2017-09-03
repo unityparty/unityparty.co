@@ -49,7 +49,7 @@
 
 							echo "<hr />Successful";
 
-							echo "<meta http-equiv=\"refresh\" content=\"0; url=index.php\" />";
+							header('Location: index.php');
 						} else {
 							echo "Incorrect password.";
 						}

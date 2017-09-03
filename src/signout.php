@@ -26,9 +26,9 @@
 	$_SESSION['view'] = $view;
 
 	if (isset($previous)) {
-		echo "<meta http-equiv=\"refresh\" content=\"0; url=" . $previous . "\" />";
+		header('Location: ' . $_SESSION['previous']);
 	} else {
-		echo "<meta http-equiv=\"refresh\" content=\"0; url=index.php\" />";
+		header('Location: index.php');
 	}
 
 ?>

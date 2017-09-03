@@ -44,7 +44,7 @@
 							$_SESSION['username'] = $username;
 							$_SESSION['authtoken'] = $authtoken;
 							echo "Successful";
-							echo "<meta http-equiv=\"refresh\" content=\"0; url=index.php\" />";
+							header('Location: index.php');
 
 						} else {
 							echo "Username already in use.";

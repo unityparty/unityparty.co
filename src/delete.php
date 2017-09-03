@@ -25,9 +25,9 @@
 				}
 
 				if (isset($_SESSION['previous'])) {
-					echo "<meta http-equiv=\"refresh\" content=\"0; url=" . $_SESSION['previous'] . "\">";
+					header('Location: ' . $_SESSION['previous']);
 				} else {
-					echo "<meta http-equiv=\"refresh\" content=\"0; url=index.php\">";
+					header('Location: index.php');
 				}
 			} elseif ($_POST['method'] == "user") {
 

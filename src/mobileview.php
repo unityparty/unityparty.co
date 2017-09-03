@@ -11,6 +11,6 @@
 		$_SESSION['view'] = 'mobile';
 	}
 
-	echo "<meta http-equiv=\"refresh\" content=\"0; url=" . $_SESSION['previous'] . "\" />";
+	header('Location: ' . $_SESSION['previous']);
 
 ?>
