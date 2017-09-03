@@ -1,6 +1,8 @@
 <?php 
 	session_start();
-	$_SESSION['previous'] = $_SESSION['page'];
+	if (isset($_SESSION['page'])) {
+		$_SESSION['previous'] = $_SESSION['page'];
+	}
 	$_SESSION['page'] = "index.php";
 
 	include ('includes/Mobile-Detect/Mobile_Detect.php');

@@ -1,5 +1,15 @@
 <?php 
 
+	// FUCNTIONS AND WHATNOT
+	include("bbminiparse.php");
+	
+	function containsHTML($str) {
+		if ($str !== strip_tags($str)) {
+			return true;
+		}
+		return false;
+	}
+
 	// GET DATA
 
 	include('config.php');
@@ -39,7 +49,8 @@
 	} else {
 		echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"assets/css/main.css\" />";
 	}
-	if ($pageCSS !== null) {
+
+	if (isset($pageCSS)) {
 		echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"assets/css/" . $pageCSS . "\" />";
 	}
 

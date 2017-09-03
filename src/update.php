@@ -4,9 +4,7 @@
 	$_SESSION['previous'] = $_SESSION['page'];
 	$_SESSION['page'] = "update.php";
 
-	include("config.php");
-
-	$conn = mysqli_connect($config['dbaddr'], $config['dbuser'], $config['dbpass'], $config['dbname']);
+	include("template.php");
 
 	$user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM `users` WHERE `username` = '" . mysqli_real_escape_string($conn, $_SESSION['username']) . "'"));
 
@@ -24,7 +22,9 @@
 						echo "<p>Scripts not allowed.</p>";
 					} else {
 
-						$query = mysqli_query($conn, "UPDATE `users` SET `nickname` = '" . mysqli_real_escape_string($conn, $_POST['nickname']) . "' WHERE `id` = " . mysqli_real_escape_string($conn, $user['id']));
+						if (!containsHTML($_POST['nickname'])) {
+							$query = mysqli_query($conn, "UPDATE `users` SET `nickname` = '" . mysqli_real_escape_string($conn, $_POST['nickname']) . "' WHERE `id` = " . mysqli_real_escape_string($conn, $user['id']));
+						}
 
 					}
 
@@ -35,14 +35,12 @@
 		if (isset($_POST['description'])) {
 
 			if ($_POST['description'] !== $user['description']) {
-
-				if (strpos($_POST['description'], "<script") !== FALSE) {
-						echo "<p>Scripts not allowed.</p>";
-					} else {
-		
-						$query = mysqli_query($conn, "UPDATE `users` set `description` = '" . mysqli_real_escape_string($conn, $_POST['description']) . "' WHERE `id` = " . $user['id']);
-
-					}
+				if (!containsHTML($_POST['description'])) {
+					if (strpos($_POST['description'], "<script") == FALSE) {
+						$description = bbParse($_POST['description']);
+						$query = mysqli_query($conn, "UPDATE `users` set `description` = '" . mysqli_real_escape_string($conn, $description) . "' WHERE `id` = " . $user['id']);
+					} 
+				}
 			}
 
 		}
